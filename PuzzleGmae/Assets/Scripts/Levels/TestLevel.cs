@@ -29,7 +29,7 @@ public class TestLevel : Level
         new DefaultValueAndColorGenerator(new ColorPickerValueAsIndex(new Color[] { Color.red, Color.green, Color.blue, Color.yellow })),
         ConditionFactory.BuildCondition(typeof(NumberOfMoveableTilesLeftWindCondition), $"{typeof(NumberOfMoveableTilesLeftWindCondition)}\n1"),
         new NumberOfMovesLoseCondition(5),
-        new SameValueMergeRule(""))
+        new DifferenceOfNMergeRule(1))
     {}
 
     //public override int ClampValueIntoAccaptableRange(int value)
