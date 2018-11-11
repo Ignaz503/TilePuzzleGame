@@ -9,9 +9,12 @@ public abstract class BaseValueAndColorGenerator
 {
     protected ColorPicker colorPicker;
 
-    protected BaseValueAndColorGenerator(ColorPicker colorPicker)
+    protected DirectionMapping directionToValueMapping;
+
+    protected BaseValueAndColorGenerator(ColorPicker colorPicker, DirectionMapping mapping)
     {
         this.colorPicker = colorPicker;
+        this.directionToValueMapping = mapping;
     }
 
     public BaseValueAndColorGenerator(string data)
@@ -31,17 +34,18 @@ public abstract class BaseValueAndColorGenerator
 
 public class DefaultValueAndColorGenerator : BaseValueAndColorGenerator
 {
-    public DefaultValueAndColorGenerator(ColorPicker colorPicker) : base(colorPicker)
+    public DefaultValueAndColorGenerator(ColorPicker colorPicker, DirectionMapping mapping) : base(colorPicker, mapping)
     {}
 
     public DefaultValueAndColorGenerator(string data) : base(data)
     {
         string[] split = data.Split('\n');
 
-        if (split.Length < 2)
+        if (split.Length < 3)
             throw new Exception($"Can't build {GetType()} from this data: {data}");
 
         colorPicker = ColorPickerFactory.BuildColorPicker(split[1]);
+        directionToValueMapping = new DirectionMapping(split[2]);
     }
 
     public override int ClampValueIntoAccaptableRange(int value)
@@ -53,29 +57,12 @@ public class DefaultValueAndColorGenerator : BaseValueAndColorGenerator
 
     public override int GetNewValue(int value, Direction movedDirection)
     {
-        return ClampValueIntoAccaptableRange(value + GetValueChangeForDirection(movedDirection));
+        return ClampValueIntoAccaptableRange(value + directionToValueMapping.GetValue(movedDirection));
     }
 
     public override string Serialize()
     {
-        return GetType().ToString() + "\n" + colorPicker.Serialize();
-    }
-
-    int GetValueChangeForDirection(Direction direction)
-    {
-        switch (direction)
-        {
-            case Direction.Up:
-                return -2;
-            case Direction.Down:
-                return 1;
-            case Direction.Right:
-                return 2;
-            case Direction.Left:
-                return -1;
-            default:
-                return 0;
-        }
+        return GetType().ToString() + "\n" + colorPicker.Serialize() + "\n" + directionToValueMapping.Serialize();
     }
 }
 

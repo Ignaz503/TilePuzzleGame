@@ -22,7 +22,7 @@ public abstract class Condition
     public abstract string Serialize();
 }
 
-[Serializable]
+[Serializable][WinCondition]
 public class NumberOfMoveableTilesLeftWindCondition : Condition
 {
     [SerializeField]int numTilesLeft;
@@ -53,6 +53,7 @@ public class NumberOfMoveableTilesLeftWindCondition : Condition
     }
 }
 
+[LoseCondition]
 public class NumberOfMovesLoseCondition : Condition
 {
     int numberOfMoves;

@@ -13,6 +13,7 @@ public class Map : MonoBehaviour
     [SerializeField] GameObject backGroundTilePrefab;
     [SerializeField] GameObject moveableTilePrefab;
     [SerializeField] GameObject blockingTilePrefab;
+    [SerializeField][Range(0f,1f)] float camOrthographicSizeMultiplier = .6f;
 
     int numberOfLayers;
 
@@ -244,9 +245,39 @@ public class Map : MonoBehaviour
 
         BuildLevel();
 
-        cam.transform.position = bounds.center + (Vector3.back * 10);
+        SetUpCamera(lvl.Width, lvl.Height);
 
         bounds.extents = bounds.extents * .5f;
+    }
+
+    public void BuildBackground(int width, int height)
+    {
+        ClearTiles();
+
+        bounds.extents = new Vector3(width, height, 0);
+        bounds.center = new Vector3(width / 2.0f, height/2.0f, 0);
+
+        BuildBackground();
+
+        SetUpCamera(width, height);
+
+        bounds.extents = bounds.extents * .5f;
+    }
+
+    void SetUpCamera(float width, float height)
+    {
+        cam.transform.position = bounds.center + (Vector3.back * 10);
+        cam.orthographicSize = (width > height ? width : height) * camOrthographicSizeMultiplier;
+    }
+
+    void ClearTiles()
+    {
+        Dictionary<Vector3Int, Tile> oldTiles = Tiles;
+        Tiles = new Dictionary<Vector3Int, Tile>();
+        foreach(Tile t in oldTiles.Values)
+        {
+            t.KillTile();
+        }
     }
 
     public bool CheckPositionMoveable(Vector3Int unlayerGridPosition)

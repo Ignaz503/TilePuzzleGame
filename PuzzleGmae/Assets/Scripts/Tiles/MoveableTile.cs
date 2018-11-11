@@ -50,9 +50,10 @@ public class MoveableTile : Tile
             //movement ended
             OnTileEndMove?.Invoke(this);
             //"merged" with existing tile
-            Destroy(gameObject);
-            InvokeOnDeath();
-            //Check if won
+            //Destroy(gameObject);
+            //InvokeOnDeath();
+            KillTile();
+
             return;
         }
 

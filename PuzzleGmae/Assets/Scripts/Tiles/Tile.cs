@@ -33,6 +33,14 @@ public class Tile : MonoBehaviour {
         spriteRenderer.sortingOrder = Mathf.Abs((int)type);
     }
 
+    public virtual void KillTile()
+    {
+        //does not remove it from map tiles
+        Destroy(gameObject);
+        OnDeath?.Invoke(this);
+        Map.RemoveTile(LayeredGridPosition);
+    }
+
     public void PlaceInWorld()
     {
         //placed infront of everything else

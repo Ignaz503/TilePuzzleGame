@@ -26,9 +26,9 @@ public class GameMaster : MonoBehaviour
             throw new System.Exception("There alredy exitsts a game master");
         Instance = this;
 
-        currentLevel = new TestLevel(5, 5);
-        Debug.Log(currentLevel.Serialize());
-        //currentLevel = Level.Deserialize(LevelString.text);
+        //currentLevel = new TestLevel(5, 5);
+        //Debug.Log(currentLevel.Serialize());
+        currentLevel = Level.Deserialize(LevelString.text);
 
         //ensure state change event called
         OnTileMove += (state) => { OnStateChange?.Invoke(state); };

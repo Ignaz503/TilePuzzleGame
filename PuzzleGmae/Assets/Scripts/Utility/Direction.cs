@@ -47,7 +47,7 @@ public class Direction
 
     public override int GetHashCode()
     {
-        return base.GetHashCode();
+        return ((uint)this).GetHashCode();
     }
 
     public override string ToString()
