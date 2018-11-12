@@ -98,6 +98,23 @@ public class LevelLayout
         return false;
     }
 
+    public void UpdateLevelHeight(int newHeight)
+    {
+        Height = newHeight;
+
+        //remove all tiles with position y greater of equal to height
+        BlockingTiles.RemoveAll((t) => t.GridPosition.y >= newHeight);
+        MoveableTiles.RemoveAll((t) => t.GridPosition.y >= newHeight);
+    }
+    
+    public void UpdateLevelWidth(int newWidth)
+    {
+        Width = newWidth;
+
+        BlockingTiles.RemoveAll(t => t.GridPosition.x >= newWidth);
+        MoveableTiles.RemoveAll(t => t.GridPosition.x >= newWidth);
+    }
+
     public string Serialize()
     {
         return JsonConvert.SerializeObject(this);

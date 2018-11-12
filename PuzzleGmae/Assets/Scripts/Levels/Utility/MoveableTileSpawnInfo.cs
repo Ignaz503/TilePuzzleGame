@@ -6,6 +6,9 @@ using UnityEngine;
 [Serializable]
 public class MoveableTileSpawnInfo
 {
+    public static string NoMergeEffect = "None";
+
     public Vector2Int GridPosition;
     public int Value;
+    public string SerializedMergeEffect = NoMergeEffect;
 }

@@ -37,7 +37,7 @@ public class Map : MonoBehaviour
         numberOfLayers = (int)Enum.GetValues(typeof(Tile.Type)).Cast<Tile.Type>().Max() + 1;
     }
 
-    MoveableTile CreateMoveableTileAt(Vector2Int pos)
+    public MoveableTile CreateMoveableTileAt(Vector2Int pos)
     {
         //TODO check if in bounds probably;
         GameObject obj = Instantiate(moveableTilePrefab);
@@ -126,25 +126,40 @@ public class Map : MonoBehaviour
 
     void BuildMoveableTiles()
     {
+        BuildMoveableTiles(Level.GetMoveableTileLayout());
+    }
+
+    void BuildMoveableTiles(List<MoveableTileSpawnInfo> layout)
+    {
         //level moveable tiles
-        foreach (MoveableTileSpawnInfo info in Level.GetMoveableTileLayout())
+        foreach (MoveableTileSpawnInfo info in layout)
         {
             MoveableTile t = CreateMoveableTileAt(info.GridPosition);
             t.SetValue(info.Value);
+            if(info.SerializedMergeEffect != MoveableTileSpawnInfo.NoMergeEffect)
+            {
+
+                t.SetMergeEffect(MergeEffectFactory.BuildMergeEffect(info.SerializedMergeEffect));
+            }
         }
     }
 
     void BuildBlockingTiles()
     {
+        BuildBlockingTiles(Level.GetBlockerTileLayout());
+    }
+
+    void BuildBlockingTiles(List<BlockingTileSpawnInfo> layout)
+    {
         //blocker tiles
-        foreach (BlockingTileSpawnInfo info in Level.GetBlockerTileLayout())
+        foreach (BlockingTileSpawnInfo info in layout)
         {
-            //TODO Spawn BlocerTile
-            CreateBlockerTileAt(info.GridPosition);
+            BlockingTile t = CreateBlockerTileAt(info.GridPosition);
+            t.SetHealth(info.Health);
         }
     }
 
-    BlockingTile CreateBlockerTileAt(Vector2Int pos)
+    public BlockingTile CreateBlockerTileAt(Vector2Int pos)
     {
         //TODO check if in bounds probably;
         GameObject obj = Instantiate(blockingTilePrefab);
@@ -267,6 +282,9 @@ public class Map : MonoBehaviour
     void SetUpCamera(float width, float height)
     {
         cam.transform.position = bounds.center + (Vector3.back * 10);
+
+        //float avg = (height * camOrthographicHeightMultiplier + width * camOrthographicWidthMultiplier) / 2;
+        //cam.orthographicSize = avg;
         cam.orthographicSize = (width > height ? width : height) * camOrthographicSizeMultiplier;
     }
 
@@ -278,6 +296,14 @@ public class Map : MonoBehaviour
         {
             t.KillTile();
         }
+    }
+
+    public void BuildLevelLayout(LevelLayout layout)
+    {
+        BuildBackground(layout.Width, layout.Height);
+
+        BuildBlockingTiles(layout.BlockingTiles);
+        BuildMoveableTiles(layout.MoveableTiles);
     }
 
     public bool CheckPositionMoveable(Vector3Int unlayerGridPosition)

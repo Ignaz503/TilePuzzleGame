@@ -12,6 +12,8 @@ public class MoveableTile : Tile
 
     [SerializeField] TextMeshProUGUI valueDisplay;
 
+    BaseMergeEffect mergeEffect;
+
     int value;
     public int Value {
         get
@@ -31,6 +33,12 @@ public class MoveableTile : Tile
         Value = map.Level.ClampValueIntoAccaptableRange(value);
     }
 
+    public void SetMergeEffect(BaseMergeEffect mergeEffect)
+    {
+        this.mergeEffect = mergeEffect;
+        
+    }
+
     public void Move(Direction dir)
     {
         //check if moveable
@@ -45,11 +53,14 @@ public class MoveableTile : Tile
         //if new pos has tile -> die
         if (Map.HasTile(LayeredGridPosition + dir))
         {
+            MoveableTile mergedInto = map.GetTileAt(LayeredGridPosition + dir) as MoveableTile;
             //OnMerge 
-            OnMerged?.Invoke(this, map.GetTileAt(LayeredGridPosition + dir) as MoveableTile);
+            OnMerged?.Invoke(this, mergedInto);
             //movement ended
             OnTileEndMove?.Invoke(this);
             //"merged" with existing tile
+            ActivateMergeEffectSelfMoving(mergedInto);
+            mergedInto.ActiavteMergeEffectMergedInto(this);
             //Destroy(gameObject);
             //InvokeOnDeath();
             KillTile();
@@ -121,6 +132,16 @@ public class MoveableTile : Tile
     public void UnregisterFromOnMerge(Action<MoveableTile,MoveableTile> callback)
     {
         OnMerged -= callback;
+    }
+
+    public void ActivateMergeEffectSelfMoving(MoveableTile mergedInto)
+    {
+        mergeEffect?.OnTilesMerged(this, mergedInto, map);
+    }
+
+    public void ActiavteMergeEffectMergedInto(MoveableTile movedIntoMe)
+    {
+        mergeEffect?.OnTilesMerged(movedIntoMe, this, map);
     }
 
 }

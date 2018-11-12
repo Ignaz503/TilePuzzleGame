@@ -23,6 +23,7 @@ public class Tile : MonoBehaviour {
 
     [HideInInspector]public Vector3Int LayeredGridPosition;
     [HideInInspector] public Vector3Int GridPosition;
+    [HideInInspector] public Vector2Int MapPosition { get { return new Vector2Int(GridPosition.x, GridPosition.y); } }
 
     public virtual void Initialize(Vector3Int position, Map map)
     {
