@@ -30,17 +30,17 @@ public class LevelLayout
         MoveableTiles = new List<MoveableTileSpawnInfo>();
     }
 
-    void AddBlockingTile(BlockingTileSpawnInfo info)
+    public void AddBlockingTile(BlockingTileSpawnInfo info)
     {
         BlockingTiles.Add(info);
     }
 
-    void AddMoveableTile(MoveableTileSpawnInfo info)
+    public void AddMoveableTile(MoveableTileSpawnInfo info)
     {
         MoveableTiles.Add(info);
     }
 
-    bool PositionAlreadyOccupied(Vector2Int pos)
+    public bool PositionAlreadyOccupied(Vector2Int pos)
     {
         foreach(BlockingTileSpawnInfo info in BlockingTiles)
         {
@@ -72,7 +72,7 @@ public class LevelLayout
         RemoveBlockingTileAtPosition(pos);
     }
 
-    bool UpdateMoveableTileValueAt(Vector2Int pos, int newVal)
+    public bool UpdateMoveableTileValueAt(Vector2Int pos, int newVal)
     {
         foreach(MoveableTileSpawnInfo info in MoveableTiles)
         {
@@ -85,7 +85,7 @@ public class LevelLayout
         return false;
     }
 
-    bool UpdateBlockingTileValueAT(Vector2Int pos, float newHealth)
+    public bool UpdateBlockingTileValueAT(Vector2Int pos, float newHealth)
     {
         foreach(BlockingTileSpawnInfo info in BlockingTiles)
         {
@@ -110,7 +110,6 @@ public class LevelLayout
     public void UpdateLevelWidth(int newWidth)
     {
         Width = newWidth;
-
         BlockingTiles.RemoveAll(t => t.GridPosition.x >= newWidth);
         MoveableTiles.RemoveAll(t => t.GridPosition.x >= newWidth);
     }

@@ -75,11 +75,17 @@ public class Map : MonoBehaviour
         for (int layer = numberOfLayers -1 ; layer >= 0; layer--)
         {
 
-            Tile t = GetTileFromLayer(gridPosWithoutLayer, layer);
+            Tile t = GetTileAt(gridPosWithoutLayer, layer);
             if (t != null)//test every layer before return null or return first found
                 return t;
         }
         return null;
+    }
+
+    public Tile GetTileAt(Vector3Int gridPosWithoutLayer, int layer)
+    {
+        gridPosWithoutLayer.z = layer < 0 ? layer : -layer;
+        return GetTileAt(gridPosWithoutLayer);
     }
 
     public Tile GetTileFromLayer(Vector3 worldPos, int layer)
@@ -154,6 +160,7 @@ public class Map : MonoBehaviour
         //blocker tiles
         foreach (BlockingTileSpawnInfo info in layout)
         {
+
             BlockingTile t = CreateBlockerTileAt(info.GridPosition);
             t.SetHealth(info.Health);
         }
@@ -337,5 +344,20 @@ public class Map : MonoBehaviour
     {
         OnTileCreated -= callback;
     }
+
+    public Color GetColorForValue(int value)
+    {
+        if (Level != null)
+            return Level.GetColorForValue(value);
+        return Color.white;
+    }
+
+    public int ClampValueIntoAccaptableRange(int val)
+    {
+        if (Level != null)
+            return Level.ClampValueIntoAccaptableRange(val);
+        return val;
+    }
+
 }
 

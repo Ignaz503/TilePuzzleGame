@@ -41,7 +41,7 @@ public class CustomDropdown : MonoBehaviour {
     }
 	
 	public GameObject OptionTemplate;
-	private class Option {
+	public class Option {
 		public String Name;
 		public Sprite Icon;
 		public GameObject Go;
@@ -49,7 +49,7 @@ public class CustomDropdown : MonoBehaviour {
 	public UnityEvent OnSelectedOptionChanged;
 	private Option SelectedOption = null;
 	private List<Option> _Options = new List<Option>();
-
+    public int OptionsCount { get { return _Options.Count; } }
 
     void Awake()
 	{
@@ -127,6 +127,7 @@ public class CustomDropdown : MonoBehaviour {
 	private void InsertOptionsAlreadyPresent()
 	{
 		var itemsContainer = transform.Find("Content").Find("Items");
+        Debug.Log($"items present: {itemsContainer.childCount}");
 		for (int i = 0; i < itemsContainer.childCount; i++)
 		{
 			var item = itemsContainer.GetChild(i);
@@ -174,7 +175,7 @@ public class CustomDropdown : MonoBehaviour {
 		_Options.Clear();
 	}
 
-	public void AddOption(string name, Sprite icon = null)
+    public Option AddOption(string name, Sprite icon = null)
 	{
 		icon = icon == null ? customIcon : icon;
 
@@ -194,13 +195,22 @@ public class CustomDropdown : MonoBehaviour {
         var itemButton = optionGo.GetComponent<Button>();
 		itemButton.onClick.AddListener(() => SelectedOptionChanged(name));
 
+        itemButton.onClick.AddListener(Animate);
+
 		var option = new Option() {
 			Name = name,
 			Icon = icon,
 			Go = optionGo
 		};
 		_Options.Add(option);
-	}
+        return option;
+    }
+
+    public void AddOption(string name, Color c,Sprite icon = null)
+    {
+        Option opt = AddOption(name, icon);
+        opt.Go.GetComponent<DropdownItem>().itemImageObj.color = c;
+    }
 
 	public void RemoveOption(string name)
 	{

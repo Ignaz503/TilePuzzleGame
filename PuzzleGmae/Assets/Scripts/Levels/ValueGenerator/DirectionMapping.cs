@@ -98,9 +98,7 @@ public class DirectionMapping
 
     public bool ValidateMapping()
     {
-        if (directionMapping.Keys.Count < 4)
-            return false;
-        else return true;
+       return directionMapping.Keys.Count >= 4;
     }
 
     public string Serialize()

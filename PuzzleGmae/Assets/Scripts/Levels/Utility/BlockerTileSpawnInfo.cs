@@ -8,5 +8,5 @@ using UnityEngine;
 public class BlockingTileSpawnInfo
 {
     public Vector2Int GridPosition;
-    public float Health;
+    public float Health = 50f;
 }

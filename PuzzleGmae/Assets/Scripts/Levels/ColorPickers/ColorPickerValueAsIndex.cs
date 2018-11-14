@@ -17,15 +17,15 @@ public class ColorPickerValueAsIndex : ColorPicker
 
         //0 is type
         //1 is count of colors
-        colors = new Color[int.Parse(split[1])];
+        Colors = new Color[int.Parse(split[1])];
 
         //2 is colors
         string[] colorSplit = split[2].Split('!');
 
-        if (colorSplit.Length < colors.Length)
-            throw new Exception($"Not enough colors for colors array wiht length{colors.Length}, only found {colorSplit.Length}");
+        if (colorSplit.Length < Colors.Length)
+            throw new Exception($"Not enough colors for colors array wiht length{Colors.Length}, only found {colorSplit.Length}");
 
-        for(int i = 0; i < colors.Length; i++)
+        for(int i = 0; i < Colors.Length; i++)
         {
             string[] floats = colorSplit[i].Split(' ');
             if (floats.Length < 4)
@@ -35,13 +35,13 @@ public class ColorPickerValueAsIndex : ColorPicker
             float r = float.Parse(floats[1]);
             float g = float.Parse(floats[2]);
             float b = float.Parse(floats[3]);
-            colors[i] = new Color(r, g, b, a);
+            Colors[i] = new Color(r, g, b, a);
         }
     }
 
     public override Color GetColor(int value)
     {
-        return colors[value];
+        return Colors[value];
     }
 
     public override string Serialize()
@@ -49,7 +49,7 @@ public class ColorPickerValueAsIndex : ColorPicker
         string ser = "";
         ser+= GetType().ToString()+"#";
         ser += Count.ToString() + "#";
-        foreach(Color c in colors)
+        foreach(Color c in Colors)
         {
             ser += c.a + " ";
             ser += c.r + " ";

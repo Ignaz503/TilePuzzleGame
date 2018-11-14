@@ -23,14 +23,14 @@ public class MoveableTile : Tile
         protected set
         {
             this.value = value;
-            ChangeColor(map.Level.GetColorForValue(this.value));
+            ChangeColor(map.GetColorForValue(this.value));
             DisplayValue();
         }
     }
         
     public void SetValue(int value)
     {
-        Value = map.Level.ClampValueIntoAccaptableRange(value);
+        Value = map.ClampValueIntoAccaptableRange(value);
     }
 
     public void SetMergeEffect(BaseMergeEffect mergeEffect)
@@ -142,6 +142,11 @@ public class MoveableTile : Tile
     public void ActiavteMergeEffectMergedInto(MoveableTile movedIntoMe)
     {
         mergeEffect?.OnTilesMerged(movedIntoMe, this, map);
+    }
+
+    public void SetActiveValueDisplay(bool value)
+    {
+        valueDisplay.gameObject.SetActive(value);
     }
 
 }

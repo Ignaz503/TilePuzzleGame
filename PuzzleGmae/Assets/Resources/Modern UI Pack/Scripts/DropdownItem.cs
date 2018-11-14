@@ -36,11 +36,6 @@ public class DropdownItem : MonoBehaviour {
 
 	public void ItemClick ()
 	{
-		if (mainScript.rememberSelection == true) 
-		{
-			PlayerPrefs.SetString (mainScript.DropdownID + "SelectedText", itemText);
-			PlayerPrefs.SetString (mainScript.DropdownID + "SelectedImage", itemImageObj.sprite.name);
-		}
 
 		mainScript.selectedText.text = itemText;
 		mainScript.selectedImage.sprite = itemImage;

@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 114063748885816350}
   - component: {fileID: 95253660248696232}
   - component: {fileID: 114893363137640126}
+  - component: {fileID: 114446213690110088}
   m_Layer: 5
   m_Name: Standard Input Field (Left Aligned)
   m_TagString: Untagged
@@ -251,6 +252,25 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114446213690110088
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1304953082864366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1679637790, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: 230
+  m_PreferredHeight: 40
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!114 &114494633598041206
 MonoBehaviour:
   m_ObjectHideFlags: 1

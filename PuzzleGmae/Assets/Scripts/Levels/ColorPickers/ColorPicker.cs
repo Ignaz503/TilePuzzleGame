@@ -8,17 +8,17 @@ using UnityEngine.Serialization;
 public abstract class ColorPicker
 {
 
-    [SerializeField]protected Color[] colors;
+    [SerializeField]public Color[] Colors { get; protected set; }
 
     public ColorPicker(Color[] colors)
     {
-        this.colors = colors;
+        this.Colors = colors;
     }
 
     public ColorPicker(string data)
     {}
 
-    public int Count { get { return colors.Length; } }
+    public int Count { get { return Colors.Length; } }
 
     public abstract Color GetColor(int value);
 

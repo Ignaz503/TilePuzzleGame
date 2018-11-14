@@ -7,13 +7,13 @@ using Newtonsoft.Json;
 
 public abstract class BaseValueAndColorGenerator
 {
-    protected ColorPicker colorPicker;
+    public ColorPicker ColorPicker { get; protected set; }
 
     protected DirectionMapping directionToValueMapping;
 
     protected BaseValueAndColorGenerator(ColorPicker colorPicker, DirectionMapping mapping)
     {
-        this.colorPicker = colorPicker;
+        this.ColorPicker = colorPicker;
         this.directionToValueMapping = mapping;
     }
 
@@ -26,7 +26,7 @@ public abstract class BaseValueAndColorGenerator
 
     public Color GetColorForValue(int value)
     {
-        return colorPicker.GetColor(value);
+        return ColorPicker.GetColor(value);
     }
 
     public abstract string Serialize();
@@ -44,14 +44,14 @@ public class DefaultValueAndColorGenerator : BaseValueAndColorGenerator
         if (split.Length < 3)
             throw new Exception($"Can't build {GetType()} from this data: {data}");
 
-        colorPicker = ColorPickerFactory.BuildColorPicker(split[1]);
+        ColorPicker = ColorPickerFactory.BuildColorPicker(split[1]);
         directionToValueMapping = new DirectionMapping(split[2]);
     }
 
     public override int ClampValueIntoAccaptableRange(int value)
     {
-        value = value < 0 ? colorPicker.Count + value : value;
-        value = value >= colorPicker.Count ? value - colorPicker.Count : value;
+        value = value < 0 ? ColorPicker.Count + value : value;
+        value = value >= ColorPicker.Count ? value - ColorPicker.Count : value;
         return value;
     }
 
@@ -62,7 +62,7 @@ public class DefaultValueAndColorGenerator : BaseValueAndColorGenerator
 
     public override string Serialize()
     {
-        return GetType().ToString() + "\n" + colorPicker.Serialize() + "\n" + directionToValueMapping.Serialize();
+        return GetType().ToString() + "\n" + ColorPicker.Serialize() + "\n" + directionToValueMapping.Serialize();
     }
 }
 

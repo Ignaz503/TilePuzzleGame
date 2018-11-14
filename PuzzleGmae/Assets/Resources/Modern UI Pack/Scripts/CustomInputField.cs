@@ -11,11 +11,11 @@ public class CustomInputField : MonoBehaviour {
 	public GameObject fieldTrigger;
 	public Text inputText;
 
-	// [Header("SETTINGS")]
+	[Header("SETTINGS")]
 	private bool isEmpty = true;
 	private bool isClicked = false;
-	private string inAnim = "In";
-	private string outAnim = "Out";
+	[SerializeField]string inAnim = "Out";
+	[SerializeField]string outAnim = "In";
 
 	void Start ()
 	{
