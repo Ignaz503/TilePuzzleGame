@@ -10,5 +10,4 @@ public class MoveableTileSpawnInfo
 
     public Vector2Int GridPosition;
     public int Value;
-    public string SerializedMergeEffect = NoMergeEffect;
 }

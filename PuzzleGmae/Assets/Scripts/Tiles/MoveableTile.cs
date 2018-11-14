@@ -12,8 +12,6 @@ public class MoveableTile : Tile
 
     [SerializeField] TextMeshProUGUI valueDisplay;
 
-    BaseMergeEffect mergeEffect;
-
     int value;
     public int Value {
         get
@@ -31,12 +29,6 @@ public class MoveableTile : Tile
     public void SetValue(int value)
     {
         Value = map.ClampValueIntoAccaptableRange(value);
-    }
-
-    public void SetMergeEffect(BaseMergeEffect mergeEffect)
-    {
-        this.mergeEffect = mergeEffect;
-        
     }
 
     public void Move(Direction dir)
@@ -60,7 +52,6 @@ public class MoveableTile : Tile
             OnTileEndMove?.Invoke(this);
             //"merged" with existing tile
             ActivateMergeEffectSelfMoving(mergedInto);
-            mergedInto.ActiavteMergeEffectMergedInto(this);
             //Destroy(gameObject);
             //InvokeOnDeath();
             KillTile();
@@ -136,12 +127,7 @@ public class MoveableTile : Tile
 
     public void ActivateMergeEffectSelfMoving(MoveableTile mergedInto)
     {
-        mergeEffect?.OnTilesMerged(this, mergedInto, map);
-    }
-
-    public void ActiavteMergeEffectMergedInto(MoveableTile movedIntoMe)
-    {
-        mergeEffect?.OnTilesMerged(movedIntoMe, this, map);
+        Map.ActivateMergeEffect(this, mergedInto);
     }
 
     public void SetActiveValueDisplay(bool value)

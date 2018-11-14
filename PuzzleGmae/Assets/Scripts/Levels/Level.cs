@@ -22,18 +22,21 @@ public class Level
 
     protected MergeRule mergeRule;
 
+    protected BaseMergeEffect mergeEffect;
+
     protected Level(LevelLayout layout)
     {
         levelLayout = layout;
     }
 
-    protected Level(LevelLayout layout, BaseValueAndColorGenerator valueAndColorGenerator, Condition winCondition, Condition loseCondition,MergeRule mergeRule) : this(layout)
+    protected Level(LevelLayout layout, BaseValueAndColorGenerator valueAndColorGenerator, Condition winCondition, Condition loseCondition,MergeRule mergeRule, BaseMergeEffect mergeEffect) : this(layout)
     {
         this.valueAndColorGenerator = valueAndColorGenerator;
         this.winCondition = winCondition;
         this.loseCondition = loseCondition;
         this.mergeRule = mergeRule;
         this.mergeRule.Initialize(this.valueAndColorGenerator);
+        this.mergeEffect = mergeEffect;
     }
 
     public int GetNewValue(int value, Direction movedDirection)
@@ -76,6 +79,11 @@ public class Level
         return mergeRule.CanMerge(tileMovedInto.Value, tileTryingToMove.Value, movingDirection);
     }
 
+    public void ActivateMergeEffect(MoveableTile moved, MoveableTile mergedInto,Map map)
+    {
+        mergeEffect.OnTilesMerged(moved, mergedInto, map);
+    }
+
     public string Serialize()
     {
         string ser = "";
@@ -98,6 +106,10 @@ public class Level
 
         //mergeRule
         ser += mergeRule.Serialize();
+        ser += dataSeperator;
+
+        //merge effect
+        ser += mergeEffect.Serialize();
 
         return ser;
     }
@@ -106,7 +118,7 @@ public class Level
     {
         string[] split = str.Split(dataSeperator.ToCharArray());
 
-        if (split.Length < 5)
+        if (split.Length < 6)
             throw new Exception($"Can't build level from this data: {str}");
 
         LevelLayout layout = LevelLayout.Deserialize(split[0]);
@@ -118,7 +130,9 @@ public class Level
 
         MergeRule mergeRule = MergeRuleFactory.BuildMergeRule(split[4]);
 
-        return new Level(layout, gen, winCond, loseCond,mergeRule);
+        BaseMergeEffect effect = MergeEffectFactory.BuildMergeEffect(split[5]);
+
+        return new Level(layout, gen, winCond, loseCond,mergeRule, effect);
     }
 }
 

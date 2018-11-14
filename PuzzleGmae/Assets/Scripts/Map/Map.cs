@@ -142,11 +142,6 @@ public class Map : MonoBehaviour
         {
             MoveableTile t = CreateMoveableTileAt(info.GridPosition);
             t.SetValue(info.Value);
-            if(info.SerializedMergeEffect != MoveableTileSpawnInfo.NoMergeEffect)
-            {
-
-                t.SetMergeEffect(MergeEffectFactory.BuildMergeEffect(info.SerializedMergeEffect));
-            }
         }
     }
 
@@ -357,6 +352,11 @@ public class Map : MonoBehaviour
         if (Level != null)
             return Level.ClampValueIntoAccaptableRange(val);
         return val;
+    }
+
+    public void ActivateMergeEffect(MoveableTile moved, MoveableTile mergedInto)
+    {
+        Level.ActivateMergeEffect(moved, mergedInto, this);
     }
 
 }

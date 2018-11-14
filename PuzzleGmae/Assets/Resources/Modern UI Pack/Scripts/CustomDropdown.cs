@@ -127,7 +127,7 @@ public class CustomDropdown : MonoBehaviour {
 	private void InsertOptionsAlreadyPresent()
 	{
 		var itemsContainer = transform.Find("Content").Find("Items");
-        Debug.Log($"items present: {itemsContainer.childCount}");
+
 		for (int i = 0; i < itemsContainer.childCount; i++)
 		{
 			var item = itemsContainer.GetChild(i);
