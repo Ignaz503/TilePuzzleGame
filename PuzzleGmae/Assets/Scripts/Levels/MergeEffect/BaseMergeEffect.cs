@@ -49,7 +49,7 @@ public class SpawnBlockerMergeEffect : BaseMergeEffect
     }
 }
 
-[Description("Nothing special happens when two tiles spawn")]
+[Description("Nothing special happens when two tiles merge")]
 public class NothingHappensMergeEffect : BaseMergeEffect
 {
     public NothingHappensMergeEffect(string data) : base(data)
