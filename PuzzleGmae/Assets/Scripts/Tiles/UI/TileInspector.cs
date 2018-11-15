@@ -23,6 +23,7 @@ public abstract class TileInspector : MonoBehaviour
     public void Remove()
     {
         tilePlacer.Remove(tileInspecting);
+
         animator.Play("Fade-out");
     }
 }

@@ -70,7 +70,6 @@ public abstract class TilePlacer : MonoBehaviour
     public virtual void Remove(Tile t)
     {
         t.KillTile();
-
         isInInspectMode = false;
     }
 }

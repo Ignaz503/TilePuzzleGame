@@ -30,4 +30,10 @@ public class MoveableTilePlacer : TilePlacer
         //TODO: change color of  tile when the pallet was chosen and value
         editor.UpdateMoveableTile(gridPos, (int)value);
     }
+
+    public override void Remove(Tile t)
+    {
+        base.Remove(t);
+        editor.RemoveMoveableTile(t.MapPosition);
+    }
 }

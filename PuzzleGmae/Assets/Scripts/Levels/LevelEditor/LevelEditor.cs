@@ -82,6 +82,12 @@ public class LevelEditor : MonoBehaviour
         layout.RemoveMoveableTileAtPosition(gridPos);
     }
 
+    public void RemoveTileAt(Vector2Int pos)
+    {
+        RemoveBlockingTile(pos);
+        RemoveMoveableTile(pos);
+    }
+
     void TryRecolorMoveableTiles()
     {
         if(gen != null)
