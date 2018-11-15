@@ -20,7 +20,7 @@ public class Level
 
     protected Condition loseCondition;
 
-    protected MergeRule mergeRule;
+    protected BaseMergeRule mergeRule;
 
     protected BaseMergeEffect mergeEffect;
 
@@ -29,7 +29,7 @@ public class Level
         levelLayout = layout;
     }
 
-    public Level(LevelLayout layout, BaseValueAndColorGenerator valueAndColorGenerator, Condition winCondition, Condition loseCondition,MergeRule mergeRule, BaseMergeEffect mergeEffect) : this(layout)
+    public Level(LevelLayout layout, BaseValueAndColorGenerator valueAndColorGenerator, Condition winCondition, Condition loseCondition,BaseMergeRule mergeRule, BaseMergeEffect mergeEffect) : this(layout)
     {
         this.valueAndColorGenerator = valueAndColorGenerator;
         this.winCondition = winCondition;
@@ -128,7 +128,7 @@ public class Level
 
         Condition loseCond = ConditionFactory.BuildCondition(split[3]);
 
-        MergeRule mergeRule = MergeRuleFactory.BuildMergeRule(split[4]);
+        BaseMergeRule mergeRule = MergeRuleFactory.BuildMergeRule(split[4]);
 
         BaseMergeEffect effect = MergeEffectFactory.BuildMergeEffect(split[5]);
 

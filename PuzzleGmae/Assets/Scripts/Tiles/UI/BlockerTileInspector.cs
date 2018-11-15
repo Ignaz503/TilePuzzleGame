@@ -15,6 +15,7 @@ public class BlockerTileInspector : TileInspector {
 
     public override void EnableInspector(Tile t)
     {
+        base.EnableInspector(t);
         if (!(t is BlockingTile))
             throw new System.Exception("trying to inspect tile with non suitable tile inspector");
         blockerTileInspecting = t as BlockingTile;

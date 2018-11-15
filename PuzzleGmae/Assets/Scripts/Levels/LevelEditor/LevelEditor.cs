@@ -14,7 +14,7 @@ public class LevelEditor : MonoBehaviour
     Condition winCondition;
     Condition loseCondition;
     BaseMergeEffect mergeEffect;
-    MergeRule mergeRule;
+    BaseMergeRule mergeRule;
 
     public int LevelWidth = 5;
     public int LevelHeight = 5;

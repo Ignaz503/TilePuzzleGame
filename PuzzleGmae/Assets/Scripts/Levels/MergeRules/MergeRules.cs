@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class MergeRule
+public abstract class BaseMergeRule
 {
     protected BaseValueAndColorGenerator valueGenerator;
 
-    public MergeRule()
+    public BaseMergeRule()
     {}
 
-    public MergeRule(string data)
+    public BaseMergeRule(string data)
     {}
 
     public abstract bool CanMerge(int valPotentialMergedInto, int valMovingTile, Direction potentialMoveDirection);
@@ -26,12 +26,12 @@ public abstract class MergeRule
 
 public static class MergeRuleFactory
 {
-    public static MergeRule BuildMergeRule(Type t, string data)
+    public static BaseMergeRule BuildMergeRule(Type t, string data)
     {
-        return Activator.CreateInstance(t, new object[] { data }) as  MergeRule;
+        return Activator.CreateInstance(t, new object[] { data }) as  BaseMergeRule;
     }
 
-    public static MergeRule BuildMergeRule(string data)
+    public static BaseMergeRule BuildMergeRule(string data)
     {
         string[] split = data.Split('\n');
         return BuildMergeRule(Type.GetType(split[0].Trim()), data);
@@ -39,7 +39,7 @@ public static class MergeRuleFactory
 }
 
 [Description("Allows merging of two tiles when the value of the tile you are trying to move equals the value of the tile you are trying to move into, after the move is done\n valuePotentialMergedInto == valueGenerator.GetNewValue(valueTileTryingToMove, potentialMoveDirection)")]
-public class DefaultMergeRule : MergeRule
+public class DefaultMergeRule : BaseMergeRule
 {
     public DefaultMergeRule(string data) : base(data)
     {
@@ -57,7 +57,7 @@ public class DefaultMergeRule : MergeRule
 }
 
 [Description("Allows merging of two adjacent tiles when they have the same value\n valPotentialMergedInto == valMovingTile")]
-public class SameValueMergeRule : MergeRule
+public class SameValueMergeRule : BaseMergeRule
 {
     public SameValueMergeRule(string data) : base(data)
     {}
@@ -74,7 +74,7 @@ public class SameValueMergeRule : MergeRule
 }
 
 [Description("Allows merging of Tiles when difference of the tile merged into minus the tile you are trying to move equals N\n valPotentialMergedInto - valMovingTile) == N")]
-public class DifferenceOfNMergeRule : MergeRule
+public class DifferenceOfNMergeRule : BaseMergeRule
 {
     [ParserType(ParserTypeAttribute.ParseableTypes.INTEGER,"Difference")]int N;
 

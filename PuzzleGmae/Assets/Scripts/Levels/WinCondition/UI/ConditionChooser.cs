@@ -6,26 +6,13 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class ConditionChooser : MonoBehaviour {
+public abstract class ConditionChooser : RuleCreator {
 
-    [SerializeField] GameObject parserPrefb;
 
-    [SerializeField] protected LevelEditor editor;
     [SerializeField] protected ConditionAttribute.ConditionType ConditionType;
-    [SerializeField] protected CustomDropdown conditionDropDown;
-    [SerializeField] protected Text descriptionDisplay;
-    [SerializeField] protected ScrollRect scrollContent;
 
-    Dictionary<string, Type> typeMapping;
-    List<Parser> parserList;
-
-    Type chosenType;
-
-    private void Start()
+    protected override void Initialize()
     {
-        typeMapping = new Dictionary<string, Type>();
-        conditionDropDown.OnSelectedOptionChanged.AddListener(OnOptionSelected);
-        parserList = new List<Parser>();
         // setup drop down
         Assembly ass = Assembly.GetAssembly(typeof(Condition));
         foreach (Type t in ass.GetTypes().Where(t => t.IsSubclassOf(typeof(Condition))))
@@ -41,56 +28,11 @@ public abstract class ConditionChooser : MonoBehaviour {
 
             typeMapping.Add(s, t);
 
-            conditionDropDown.AddOption(s);
+            dropDown.AddOption(s);
         }
     }
 
-    void SetupParseableContent()
-    {
-        parserList.Clear();
-        //destroy existing children
-        for (int i = 0; i < scrollContent.content.childCount; i++)
-        {
-            Destroy(scrollContent.content.GetChild(i).gameObject);
-        }
-
-        //setup new 
-        BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | 
-        BindingFlags.Static | BindingFlags.Instance |
-        BindingFlags.DeclaredOnly;
-        FieldInfo[] fields = chosenType.GetFields(flags);
-
-        foreach(FieldInfo field in fields)
-        {
-            ParserTypeAttribute att = field.GetCustomAttribute<ParserTypeAttribute>();
-
-            if (att == null)//no at no inputing
-                continue;
-
-            GameObject obj = Instantiate(parserPrefb,scrollContent.content);
-
-            Parser p = obj.GetComponent<Parser>();
-            p.Initialize(att);
-            parserList.Add(p);
-        }
-        //set content size
-        scrollContent.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, scrollContent.content.childCount * (parserPrefb.transform as RectTransform).rect.height);
-    }
-
-    void OnOptionSelected()
-    {
-        string opt = conditionDropDown.GetSelectedOption();
-        if (typeMapping.ContainsKey(opt))
-        {
-            chosenType= typeMapping[opt];
-            DescriptionAttribute att = chosenType.GetCustomAttribute<DescriptionAttribute>();
-            if (att != null)
-                descriptionDisplay.text = att.Description;
-            SetupParseableContent();
-        }
-    }
-
-    protected string MakeData()
+    protected override string MakeData()
     {
         string data = chosenType.ToString() + "\n";
 
@@ -101,7 +43,7 @@ public abstract class ConditionChooser : MonoBehaviour {
         return data;
     }
 
-    public virtual void Save()
+    public override void Save()
     {
         if (!ValidInput())
         {
@@ -109,15 +51,4 @@ public abstract class ConditionChooser : MonoBehaviour {
             return;
         }
     }
-
-    public bool ValidInput()
-    {
-        if (chosenType == null)
-            return false;
-        foreach (Parser p in parserList)
-            if (!p.HasValue())
-                return false;
-        return true;
-    }
-
 }
