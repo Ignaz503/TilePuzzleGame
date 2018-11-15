@@ -11,6 +11,10 @@ public class LevelEditor : MonoBehaviour
     [SerializeField] Map map;
     LevelLayout layout;
     BaseValueAndColorGenerator gen;
+    Condition winCondition;
+    Condition loseCondition;
+    BaseMergeEffect mergeEffect;
+    MergeRule mergeRule;
 
     public int LevelWidth = 5;
     public int LevelHeight = 5;
@@ -84,9 +88,73 @@ public class LevelEditor : MonoBehaviour
         {
             foreach(MoveableTileSpawnInfo info in layout.MoveableTiles)
             {
+                Debug.Log(info.Value);
                 map.GetTileAt(info.GridPosition.ToVec3XY(0), Tile.GetLayerForType(Tile.Type.Movable)).ChangeColor(gen.GetColorForValue(info.Value));
             }
         }
     }
 
+    public void SetWinCondition(string data)
+    {
+        winCondition = ConditionFactory.BuildCondition(data);
+    }
+
+    public void SetLoseCondition(string data)
+    {
+        loseCondition = ConditionFactory.BuildCondition(data);
+    }
+
+    public void SetMergeRule(string data)
+    {
+        mergeRule = MergeRuleFactory.BuildMergeRule(data);
+    }
+
+    public void SetMergeEffect(string data)
+    {
+        mergeEffect = MergeEffectFactory.BuildMergeEffect(data);
+    }
+
+    public bool ValidCreation()
+    {
+        if(layout.MoveableTiles.Count <= 1)
+        {
+            WarningWindow.Instance.GiveWarning("Add Moveable Tiles", "For the level to be playable you need to add more than one moveable tile");
+            return false;
+        }
+        if(gen == null)
+        {
+            WarningWindow.Instance.GiveWarning("Create Value and Color Generator", "For the level to be playable you need create a value and color generator");
+            return false;
+        }
+        if(winCondition == null)
+        {
+            WarningWindow.Instance.GiveWarning("Choose wincondition", "For the level to be playable you need to chose a win condition");
+            return false;
+        }
+        if(loseCondition == null)
+        {
+            WarningWindow.Instance.GiveWarning("Chose losecondition", "For the level to be playable you need to chose a losecondition");
+            return false;
+        }
+        if(mergeEffect == null)
+        {
+            WarningWindow.Instance.GiveWarning("Chose merge effect", "For the level to be playable you need to chose a merge effect first");
+            return false;
+        }
+        if(mergeRule == null)
+        {
+            WarningWindow.Instance.GiveWarning("Create a merge rule", "For the level to be playable you need to create a merge rule first");
+            return false;
+        }
+
+        return true;
+    }
+
+    public Level MakeLevel()
+    {
+        if (ValidCreation())
+            return null;
+        else
+            return new Level(layout, gen, winCondition, loseCondition, mergeRule, mergeEffect);
+    }
 }

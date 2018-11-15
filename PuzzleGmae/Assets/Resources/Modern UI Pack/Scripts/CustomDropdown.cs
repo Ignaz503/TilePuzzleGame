@@ -76,7 +76,6 @@ public class CustomDropdown : MonoBehaviour {
         }
 
 		InsertOptionsAlreadyPresent();
-
     }
 
 	public void Animate ()
@@ -127,7 +126,6 @@ public class CustomDropdown : MonoBehaviour {
 	private void InsertOptionsAlreadyPresent()
 	{
 		var itemsContainer = transform.Find("Content").Find("Items");
-
 		for (int i = 0; i < itemsContainer.childCount; i++)
 		{
 			var item = itemsContainer.GetChild(i);

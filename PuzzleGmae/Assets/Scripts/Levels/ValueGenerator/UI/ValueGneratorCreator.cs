@@ -4,15 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ValueGneratorCreator : MonoBehaviour {
 
     [SerializeField] LevelEditor levelEditor;
     [SerializeField] DemoPanelAnim menuAnim;
-    [SerializeField]List<string> options;
     [SerializeField] CustomDropdown dropDown;
     [SerializeField] DirectionValueMapper mapping;
     [SerializeField] ColorPickerCreator colorPallet;
+    [SerializeField] Text descriptionDisplay; 
     Dictionary<string, Type> optionsMapping;
 
     Type chosenType;
@@ -21,7 +22,16 @@ public class ValueGneratorCreator : MonoBehaviour {
     {
         optionsMapping = new Dictionary<string, Type>();
 
-        dropDown.OnSelectedOptionChanged.AddListener(() => { chosenType = optionsMapping[dropDown.GetSelectedOption()]; });
+        dropDown.OnSelectedOptionChanged.AddListener(() => 
+        {
+            chosenType = optionsMapping[dropDown.GetSelectedOption()];
+            DescriptionAttribute description = chosenType.GetCustomAttribute<DescriptionAttribute>();
+            if(description != null)
+            {
+                descriptionDisplay.text = description.Description;
+            }
+        }
+        );
 
         Assembly ass = Assembly.GetAssembly(typeof(BaseValueAndColorGenerator));
         foreach(Type t in ass.GetTypes().Where(t => t.IsSubclassOf(typeof(BaseValueAndColorGenerator))))
@@ -29,7 +39,7 @@ public class ValueGneratorCreator : MonoBehaviour {
             string s = t.ToString();
 
             s = string.Concat(s.Select(x => char.IsUpper(x) ? " " + x : x.ToString())).TrimStart(' ');
-            options.Add(s);
+
             optionsMapping.Add(s, t);
 
             dropDown.AddOption(s);           

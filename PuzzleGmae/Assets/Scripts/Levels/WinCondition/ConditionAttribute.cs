@@ -20,16 +20,16 @@ public abstract  class ConditionAttribute : Attribute
     }
 }
 
-public class LoseCondition : ConditionAttribute
+public class LoseCondtionAttribute : ConditionAttribute
 {
-    public LoseCondition() : base(ConditionType.Lose)
+    public LoseCondtionAttribute() : base(ConditionType.Lose)
     {
     }
 }
 
-public class WinCondition : ConditionAttribute
+public class WinConditionAttribute : ConditionAttribute
 {
-    public WinCondition() : base(ConditionType.Win)
+    public WinConditionAttribute() : base(ConditionType.Win)
     {
     }
 }

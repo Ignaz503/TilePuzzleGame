@@ -32,6 +32,7 @@ public abstract class BaseValueAndColorGenerator
     public abstract string Serialize();
 }
 
+[Description("The default Value Generator.\nNew values/colors get calcuated by ADDING the value for the desired move direction in the direction mapping to the old value")]
 public class DefaultValueAndColorGenerator : BaseValueAndColorGenerator
 {
     public DefaultValueAndColorGenerator(ColorPicker colorPicker, DirectionMapping mapping) : base(colorPicker, mapping)
@@ -48,8 +49,10 @@ public class DefaultValueAndColorGenerator : BaseValueAndColorGenerator
         directionToValueMapping = new DirectionMapping(split[2]);
     }
 
+    
     public override int ClampValueIntoAccaptableRange(int value)
     {
+        //TODO: make sure values in range with modulo an not just this shit
         value = value < 0 ? ColorPicker.Count + value : value;
         value = value >= ColorPicker.Count ? value - ColorPicker.Count : value;
         return value;

@@ -29,7 +29,7 @@ public class Level
         levelLayout = layout;
     }
 
-    protected Level(LevelLayout layout, BaseValueAndColorGenerator valueAndColorGenerator, Condition winCondition, Condition loseCondition,MergeRule mergeRule, BaseMergeEffect mergeEffect) : this(layout)
+    public Level(LevelLayout layout, BaseValueAndColorGenerator valueAndColorGenerator, Condition winCondition, Condition loseCondition,MergeRule mergeRule, BaseMergeEffect mergeEffect) : this(layout)
     {
         this.valueAndColorGenerator = valueAndColorGenerator;
         this.winCondition = winCondition;

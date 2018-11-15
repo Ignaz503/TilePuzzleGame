@@ -22,12 +22,12 @@ public abstract class Condition
     public abstract string Serialize();
 }
 
-[Serializable][WinCondition]
-public class NumberOfMoveableTilesLeftWindCondition : Condition
+[Serializable][WinCondition][Description("One wins when there are only N number of moveable tiles left on the field")]
+public class NumberOfMoveableTilesLeftWinCondition : Condition
 {
-    [SerializeField]int numTilesLeft;
+    [SerializeField,ParserType(ParserTypeAttribute.ParseableTypes.INTEGER,"Number Of Tiles Left For Victory")]protected int numTilesLeft;
 
-    public NumberOfMoveableTilesLeftWindCondition(string data) : base(data)
+    public NumberOfMoveableTilesLeftWinCondition(string data) : base(data)
     {
         string[] split = data.Split('\n');
 
@@ -37,7 +37,7 @@ public class NumberOfMoveableTilesLeftWindCondition : Condition
         numTilesLeft = int.Parse(split[1]);
     }
 
-    public NumberOfMoveableTilesLeftWindCondition(int numberTilesLeft)
+    public NumberOfMoveableTilesLeftWinCondition(int numberTilesLeft)
     {
         numTilesLeft = numberTilesLeft;
     }
@@ -53,10 +53,10 @@ public class NumberOfMoveableTilesLeftWindCondition : Condition
     }
 }
 
-[LoseCondition]
+[LoseCondtion][Description("One loses after the number of steps is reached")]
 public class NumberOfMovesLoseCondition : Condition
 {
-    int numberOfMoves;
+    [ParserType(ParserTypeAttribute.ParseableTypes.INTEGER,"Number Of Possible Moves")]int numberOfMoves;
 
     public NumberOfMovesLoseCondition()
     {}

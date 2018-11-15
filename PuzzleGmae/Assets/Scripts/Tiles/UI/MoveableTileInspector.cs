@@ -26,6 +26,7 @@ public class MoveableTileInspector : TileInspector
         if (!(t is MoveableTile))
             throw new System.Exception($"Trying to inspect wrong type of tile, can only inspect {typeof(MoveableTile)} trying to inspect {t.GetType()}");
         moveableTileInspected = t as MoveableTile;
+        selectedImage.color = t.TileColor;
     }
 
     private void FadeIn()
@@ -54,11 +55,13 @@ public class MoveableTileInspector : TileInspector
     {
         //god is this fucking ugly
         string s = colorDropDown.GetSelectedOption();
+
         int value = int.Parse(s);
         if(gen != null)
         {
             moveableTileInspected.ChangeColor(gen.ColorPicker.GetColor(value));
             selectedImage.color = gen.ColorPicker.GetColor(value);
+            tilePlacer.UpdateValue(moveableTileInspected.GridPosition.ToVec2IntXY(), value);
         }
     }
 

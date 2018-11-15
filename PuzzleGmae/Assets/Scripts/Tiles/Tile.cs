@@ -15,6 +15,7 @@ public class Tile : MonoBehaviour {
     protected event Action<Tile> OnDeath;
 
     [SerializeField] protected SpriteRenderer spriteRenderer;
+    public Color TileColor { get { return spriteRenderer.color; } }
     protected Map map;
     public Map Map { get { return map; } }
     [SerializeField] protected Type type;

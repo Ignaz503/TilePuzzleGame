@@ -27,7 +27,7 @@ public class TestLevel : Level
             new MoveableTileSpawnInfo(){GridPosition = new Vector2Int(2,4),Value =0}
         }),
         new DefaultValueAndColorGenerator(new ColorPickerValueAsIndex(new Color[] { Color.red, Color.green, Color.blue, Color.yellow }),new DirectionMapping(-2,1,2,-1)),
-        ConditionFactory.BuildCondition(typeof(NumberOfMoveableTilesLeftWindCondition), $"{typeof(NumberOfMoveableTilesLeftWindCondition)}\n1"),
+        ConditionFactory.BuildCondition(typeof(NumberOfMoveableTilesLeftWinCondition), $"{typeof(NumberOfMoveableTilesLeftWinCondition)}\n1"),
         new NumberOfMovesLoseCondition(5),
         new DifferenceOfNMergeRule(1),
         new SpawnBlockerMergeEffect())

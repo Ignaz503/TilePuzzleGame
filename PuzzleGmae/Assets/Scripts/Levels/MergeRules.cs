@@ -22,7 +22,6 @@ public abstract class MergeRule
         valueGenerator = valueGen;
     }
 
-    public abstract string GetDesctiption();
 }
 
 public static class MergeRuleFactory
@@ -39,6 +38,7 @@ public static class MergeRuleFactory
     }
 }
 
+[Description("Allows merging of two tiles when the value of the tile you are trying to move equals the value of the tile you are trying to move into, after the move is done\n valuePotentialMergedInto == valueGenerator.GetNewValue(valueTileTryingToMove, potentialMoveDirection)")]
 public class DefaultMergeRule : MergeRule
 {
     public DefaultMergeRule(string data) : base(data)
@@ -50,17 +50,13 @@ public class DefaultMergeRule : MergeRule
         return valuePotentialMergedInto == valueGenerator.GetNewValue(valueTileTryingToMove, potentialMoveDirection);
     }
 
-    public override string GetDesctiption()
-    {
-        return "Allows merging of two tiles when the value of the tile you are trying to move equals the value of the tile you are trying to move into, after the move is done\n valuePotentialMergedInto == valueGenerator.GetNewValue(valueTileTryingToMove, potentialMoveDirection);";
-    }
-
     public override string Serialize()
     {
         return GetType().ToString();
     }
 }
 
+[Description("Allows merging of two adjacent tiles when they have the same value\n valPotentialMergedInto == valMovingTile")]
 public class SameValueMergeRule : MergeRule
 {
     public SameValueMergeRule(string data) : base(data)
@@ -71,20 +67,16 @@ public class SameValueMergeRule : MergeRule
         return valPotentialMergedInto == valMovingTile;
     }
 
-    public override string GetDesctiption()
-    {
-        return "Allows merging of two adjacent tiles when they have the same value\n valPotentialMergedInto == valMovingTile";
-    }
-
     public override string Serialize()
     {
         return GetType().ToString();
     }
 }
 
+[Description("Allows merging of Tiles when difference of the tile merged into minus the tile you are trying to move equals N\n valPotentialMergedInto - valMovingTile) == N")]
 public class DifferenceOfNMergeRule : MergeRule
 {
-    int N;
+    [ParserType(ParserTypeAttribute.ParseableTypes.INTEGER,"Difference")]int N;
 
     public DifferenceOfNMergeRule(int n)
     {
@@ -104,11 +96,6 @@ public class DifferenceOfNMergeRule : MergeRule
     public override bool CanMerge(int valPotentialMergedInto, int valMovingTile, Direction potentialMoveDirection)
     {
         return (valPotentialMergedInto - valMovingTile) == N;
-    }
-
-    public override string GetDesctiption()
-    {
-        return "Allows merging of Tiles when difference of the tile merged into minus the tile you are trying to move equals N\n valPotentialMergedInto - valMovingTile) == N";
     }
 
     public override string Serialize()
