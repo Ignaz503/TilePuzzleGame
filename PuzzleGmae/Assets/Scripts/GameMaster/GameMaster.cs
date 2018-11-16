@@ -16,6 +16,7 @@ public class GameMaster : MonoBehaviour
 
     [SerializeField] Map map;
     [SerializeField] Level currentLevel;
+    [SerializeField] bool loadFromPrefs;
 
     int movesCounter;
     int mergeCounter;
@@ -28,7 +29,13 @@ public class GameMaster : MonoBehaviour
 
         //currentLevel = new TestLevel(5, 5);
         //Debug.Log(currentLevel.Serialize());
-        currentLevel = Level.Deserialize(LevelString.text);
+        if (!loadFromPrefs)
+            currentLevel = Level.Deserialize(LevelString.text);
+        else
+        {
+            Debug.Log(PlayerPrefs.GetString("level"));
+            currentLevel = Level.Deserialize(PlayerPrefs.GetString("level"));
+        }
 
         //ensure state change event called
         OnTileMove += (state) => { OnStateChange?.Invoke(state); };

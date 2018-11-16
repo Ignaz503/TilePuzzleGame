@@ -359,5 +359,15 @@ public class Map : MonoBehaviour
         Level.ActivateMergeEffect(moved, mergedInto, this);
     }
 
+    public void ToggleValueDisplayForTiles()
+    {
+        foreach(Tile t in GetTilesInLayer(Tile.GetLayerForType(Tile.Type.Movable)))
+        {
+            MoveableTile tM = t as MoveableTile;
+
+            tM.ToggleValueDisplay();
+        }
+    }
+
 }
 

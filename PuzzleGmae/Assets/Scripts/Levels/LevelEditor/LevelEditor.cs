@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class LevelEditor : MonoBehaviour
@@ -158,9 +159,21 @@ public class LevelEditor : MonoBehaviour
 
     public Level MakeLevel()
     {
-        if (ValidCreation())
+        if (!ValidCreation())
             return null;
         else
             return new Level(layout, gen, winCondition, loseCondition, mergeRule, mergeEffect);
+    }
+
+    public void PlayLevel()
+    {
+        Level l = MakeLevel();
+
+        if(l != null)
+        {
+            //todo load level
+            PlayerPrefs.SetString("level", l.Serialize());
+            SceneManager.LoadScene("_PlayLevel_");
+        }
     }
 }

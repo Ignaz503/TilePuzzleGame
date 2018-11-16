@@ -11,19 +11,55 @@ public class WarningWindow : MonoBehaviour {
     [SerializeField] Text body;
     [SerializeField] Animator animator;
 
+    struct Warning
+    {
+        public string Header;
+        public string Body;
+    }
+    Queue<Warning> warningQueue;
+    bool canDisplayNext = true;
+
     private void Awake()
     {
+
         if (Instance != null)
             throw new System.Exception("Only supporting one warning window right now. Already one in existance");
         Instance = this;
 
-        animator.Play("Fade-out");
+        warningQueue = new Queue<Warning>();
+
+        StartCoroutine(WorkQueue());
+    }
+
+
+    public void SetNextPossible()
+    {
+        canDisplayNext = true;
     }
 
     public void GiveWarning(string header, string body)
     {
-        this.header.text = header;
-        this.body.text = body;
+        warningQueue.Enqueue(new Warning() { Header = header, Body = body });
+    }
+    
+    void DisplayWarning(Warning war)
+    {
+        this.header.text = war.Header;
+        this.body.text = war.Body;
+        canDisplayNext = false;
         animator.Play("Fade-in");
+    }
+
+    IEnumerator WorkQueue()
+    {
+        while (true)
+        {
+            if(warningQueue.Count > 0 && canDisplayNext)
+            {
+                DisplayWarning(warningQueue.Dequeue());
+            }
+
+            yield return null;
+        }
     }
 }

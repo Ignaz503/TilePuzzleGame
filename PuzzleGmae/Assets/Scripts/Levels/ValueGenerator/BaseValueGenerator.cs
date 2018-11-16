@@ -32,7 +32,7 @@ public abstract class BaseValueAndColorGenerator
     public abstract string Serialize();
 }
 
-[Description("The default Value Generator.\nNew values/colors get calcuated by ADDING the value for the desired move direction in the direction mapping to the old value")]
+[Description("The default Value Generator.\nNew colors get calcuated by ADDING the value for the desired move direction to the old value")]
 public class DefaultValueAndColorGenerator : BaseValueAndColorGenerator
 {
     public DefaultValueAndColorGenerator(ColorPicker colorPicker, DirectionMapping mapping) : base(colorPicker, mapping)

@@ -11,6 +11,8 @@ public class MoveableTile : Tile
     protected event Action<MoveableTile, MoveableTile> OnMerged;
 
     [SerializeField] TextMeshProUGUI valueDisplay;
+    [SerializeField] Animator Animator; 
+    [SerializeField] float speed = 1f;
 
     int value;
     public int Value {
@@ -42,23 +44,37 @@ public class MoveableTile : Tile
         //remove from tiles
         Map.RemoveTile(LayeredGridPosition);
 
-        //if new pos has tile -> die
-        if (Map.HasTile(LayeredGridPosition + dir))
-        {
-            MoveableTile mergedInto = map.GetTileAt(LayeredGridPosition + dir) as MoveableTile;
-            //OnMerge 
-            OnMerged?.Invoke(this, mergedInto);
-            //movement ended
-            OnTileEndMove?.Invoke(this);
-            //"merged" with existing tile
-            ActivateMergeEffectSelfMoving(mergedInto);
-            //Destroy(gameObject);
-            //InvokeOnDeath();
-            KillTile();
+        StartCoroutine(MoveCoroutine(dir));
+        ////if new pos has tile -> die
+        //if (Map.HasTile(LayeredGridPosition + dir))
+        //{
+        //    MoveableTile mergedInto = map.GetTileAt(LayeredGridPosition + dir) as MoveableTile;
+        //    //OnMerge 
+        //    OnMerged?.Invoke(this, mergedInto);
+        //    //movement ended
+        //    OnTileEndMove?.Invoke(this);
+        //    //"merged" with existing tile
+        //    ActivateMergeEffectSelfMoving(mergedInto);
+        //    //Destroy(gameObject);
+        //    //InvokeOnDeath();
+        //    KillTile();
 
-            return;
-        }
+        //    return;
+        //}
 
+        ////else change value
+        //Value = map.Level.GetNewValue(value, dir);
+        ////set position and add to tiles
+        //LayeredGridPosition += dir;
+        //GridPosition += dir;
+        //PlaceInWorld();
+        ////rejoin tiles in map
+        //Map.Add(LayeredGridPosition, this);
+        //OnTileEndMove?.Invoke(this);
+    }
+
+    void EndMove(Direction dir)
+    {
         //else change value
         Value = map.Level.GetNewValue(value, dir);
         //set position and add to tiles
@@ -68,6 +84,21 @@ public class MoveableTile : Tile
         //rejoin tiles in map
         Map.Add(LayeredGridPosition, this);
         OnTileEndMove?.Invoke(this);
+    }
+
+    void Merge(Direction dir)
+    {
+        MoveableTile mergedInto = map.GetTileAt(LayeredGridPosition + dir) as MoveableTile;
+        //OnMerge 
+        mergedInto.PlayMergeAnimation();
+        OnMerged?.Invoke(this, mergedInto);
+        //movement ended
+        OnTileEndMove?.Invoke(this);
+        //"merged" with existing tile
+        ActivateMergeEffectSelfMoving(mergedInto);
+        //Destroy(gameObject);
+        //InvokeOnDeath();
+        KillTile();
     }
 
     public bool CheckIfMoveable(Direction dir)
@@ -135,4 +166,49 @@ public class MoveableTile : Tile
         valueDisplay.gameObject.SetActive(value);
     }
 
+    public void ToggleValueDisplay()
+    {
+        valueDisplay.gameObject.SetActive(!valueDisplay.gameObject.activeSelf);
+    }
+
+    IEnumerator MoveCoroutine(Direction dir)
+    {
+        Vector3 endPos = Map.GridPositionToWorld(GridPosition + dir);
+        Vector3 worldPos = Map.GridPositionToWorld(GridPosition);
+        Color current = TileColor;
+        Color next;
+        if (!Map.HasTile(LayeredGridPosition + dir))
+        {
+           next = Map.GetColorForValue(map.Level.GetNewValue(value, dir));
+        }
+        else
+        {
+            next = map.GetTileAt(LayeredGridPosition + dir).TileColor;
+        }
+        float t = 0f;
+
+        while(endPos != transform.position)
+        {
+            t += Time.deltaTime*speed;
+            transform.position = Vector3.Lerp(worldPos, endPos, t);
+            ChangeColor(Color.Lerp(current, next, t));
+            yield return null;
+        }
+
+        if (Map.HasTile(LayeredGridPosition + dir))
+        {
+            Merge(dir);
+        }
+        else
+        {
+            EndMove(dir);
+        }
+    }
+
+    void PlayMergeAnimation()
+    {
+        Debug.Log("Playing animation");
+        Animator.Play("MergeAnimation");
+    }
 }
+

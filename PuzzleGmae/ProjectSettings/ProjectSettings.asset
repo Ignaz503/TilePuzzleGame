@@ -618,7 +618,7 @@ PlayerSettings:
   cloudServicesEnabled:
     UNet: 1
   facebookSdkVersion: 7.9.4
-  apiCompatibilityLevel: 2
+  apiCompatibilityLevel: 3
   cloudProjectId: 881657a9-5249-4502-9cba-a56e17e14b48
   projectName: PuzzleGmae
   organizationId: ignaz
