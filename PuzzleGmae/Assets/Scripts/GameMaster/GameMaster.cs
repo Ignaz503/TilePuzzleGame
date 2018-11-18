@@ -96,4 +96,29 @@ public class GameMaster : MonoBehaviour
     {
         return new GameState(map, movesCounter, mergeCounter);
     }
+
+    public string GetMergeRuleDescription()
+    {
+        return currentLevel.GetMergeRuleDescription();
+    }
+
+    public string GetMergeEffectDescription()
+    {
+        return currentLevel.GetMergeEffectDescription();
+    }
+
+    public string GetWinConditionDescription()
+    {
+        return currentLevel.GetWinConditionDescription();
+    }
+
+    public string GetLoseConditionDescription()
+    {
+        return currentLevel.GetLoseConditionDescription();
+    }
+
+    public string GetValueAndColorGeneratorDescription()
+    {
+        return currentLevel.GetValueAndColorGeneratorDescription();
+    }
 }

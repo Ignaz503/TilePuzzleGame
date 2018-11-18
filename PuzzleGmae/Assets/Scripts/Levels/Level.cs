@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -82,6 +83,43 @@ public class Level
     public void ActivateMergeEffect(MoveableTile moved, MoveableTile mergedInto,Map map)
     {
         mergeEffect.OnTilesMerged(moved, mergedInto, map);
+    }
+
+    string GetDescriptionFromObject(object obj)
+    {
+        DescriptionAttribute description = obj.GetType().GetCustomAttribute<DescriptionAttribute>();
+        if (description != null)
+            return description.Description;
+        else
+            return "Boi, we got no description... Better figure it out on your own";
+    }
+
+    public string GetMergeRuleDescription()
+    {
+        //return GetDescriptionFromObject(mergeRule);
+        return mergeRule.GetInstanceDescription();
+    }
+
+    public string GetMergeEffectDescription()
+    {
+        return GetDescriptionFromObject(mergeEffect);
+    }
+
+    public string GetWinConditionDescription()
+    {
+        return winCondition.GetInstanceDescription();
+        //return GetDescriptionFromObject(winCondition);
+    }
+
+    public string GetLoseConditionDescription()
+    {
+        return loseCondition.GetInstanceDescription();
+       // return GetDescriptionFromObject(loseCondition);
+    }
+
+    public string GetValueAndColorGeneratorDescription()
+    {
+        return GetDescriptionFromObject(valueAndColorGenerator);
     }
 
     public string Serialize()

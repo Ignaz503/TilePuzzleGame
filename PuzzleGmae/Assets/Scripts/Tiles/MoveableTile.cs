@@ -11,7 +11,8 @@ public class MoveableTile : Tile
     protected event Action<MoveableTile, MoveableTile> OnMerged;
 
     [SerializeField] TextMeshProUGUI valueDisplay;
-    [SerializeField] Animator Animator; 
+    [SerializeField] Animator Animator;
+    [SerializeField] AudioSource audioSrc;
     [SerializeField] float speed = 1f;
 
     int value;
@@ -40,7 +41,7 @@ public class MoveableTile : Tile
             return;
 
         OnTileStartMove?.Invoke(this);
-
+        audioSrc.Play();
         //remove from tiles
         Map.RemoveTile(LayeredGridPosition);
 

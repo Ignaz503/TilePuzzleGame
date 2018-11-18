@@ -12,10 +12,12 @@ public abstract class Condition
     /// </summary>
     /// <param name="data">data inheritors can use to build</param>
     public Condition(string data)
-    {    }
+    {}
 
     public Condition()
     {}
+
+    public abstract string GetInstanceDescription();
 
     public abstract bool CheckIfConditionAchived(GameState stateOfGame);
 
@@ -45,6 +47,16 @@ public class NumberOfMoveableTilesLeftWinCondition : Condition
     public override bool CheckIfConditionAchived(GameState stateOfGame)
     {
         return stateOfGame.Map.GetTilesCountOnLayer(Tile.GetLayerForType(Tile.Type.Movable)) <= numTilesLeft;
+    }
+
+    public override string GetInstanceDescription()
+    {
+        if (numTilesLeft > 1)
+        {
+            return $"One wins when there are only {numTilesLeft} tiles left on the field";
+        }
+        else
+            return $"One wins when there is only 1 tile left on the field";
     }
 
     public override string Serialize()
@@ -79,6 +91,11 @@ public class NumberOfMovesLoseCondition : Condition
     public override bool CheckIfConditionAchived(GameState stateOfGame)
     {
         return stateOfGame.MovesMade >= numberOfMoves;
+    }
+
+    public override string GetInstanceDescription()
+    {
+        return $"One loses after {numberOfMoves} moves";
     }
 
     public override string Serialize()

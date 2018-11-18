@@ -46,8 +46,9 @@ public class BlockerTilePlacer : TilePlacer
 
     public override void Remove(Tile t)
     {
-        base.Remove(t);
+        Debug.Log("Remove tile");
         editor.RemoveBlockingTile(t.GridPosition.ToVec2IntXY());
+        base.Remove(t);
     }
 }
 

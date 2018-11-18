@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public abstract class BaseMergeRule
@@ -14,6 +15,8 @@ public abstract class BaseMergeRule
     {}
 
     public abstract bool CanMerge(int valPotentialMergedInto, int valMovingTile, Direction potentialMoveDirection);
+
+    public abstract string GetInstanceDescription();
 
     public abstract string Serialize();
 
@@ -50,6 +53,11 @@ public class DefaultMergeRule : BaseMergeRule
         return valuePotentialMergedInto == valueGenerator.GetNewValue(valueTileTryingToMove, potentialMoveDirection);
     }
 
+    public override string GetInstanceDescription()
+    {
+        return GetType().GetCustomAttribute<DescriptionAttribute>().Description;
+    }
+
     public override string Serialize()
     {
         return GetType().ToString();
@@ -65,6 +73,11 @@ public class SameValueMergeRule : BaseMergeRule
     public override bool CanMerge(int valPotentialMergedInto, int valMovingTile, Direction potentialMoveDirection)
     {
         return valPotentialMergedInto == valMovingTile;
+    }
+
+    public override string GetInstanceDescription()
+    {
+        return GetType().GetCustomAttribute<DescriptionAttribute>().Description;
     }
 
     public override string Serialize()
@@ -96,6 +109,11 @@ public class DifferenceOfNMergeRule : BaseMergeRule
     public override bool CanMerge(int valPotentialMergedInto, int valMovingTile, Direction potentialMoveDirection)
     {
         return (valPotentialMergedInto - valMovingTile) == N;
+    }
+
+    public override string GetInstanceDescription()
+    {
+        return $"Allows merging of Tiles when difference of the tile merged into minus the tile you are trying to move equals {N}\n valPotentialMergedInto - valMovingTile) == {N}";
     }
 
     public override string Serialize()
