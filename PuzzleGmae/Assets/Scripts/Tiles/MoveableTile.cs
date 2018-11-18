@@ -12,7 +12,8 @@ public class MoveableTile : Tile
 
     [SerializeField] TextMeshProUGUI valueDisplay;
     [SerializeField] Animator Animator;
-    [SerializeField] AudioSource audioSrc;
+    [SerializeField] AudioSource slideAudioSrc;
+    [SerializeField] AudioSource mergeAudioSrc;
     [SerializeField] float speed = 1f;
 
     int value;
@@ -41,7 +42,7 @@ public class MoveableTile : Tile
             return;
 
         OnTileStartMove?.Invoke(this);
-        audioSrc.Play();
+        slideAudioSrc.Play();
         //remove from tiles
         Map.RemoveTile(LayeredGridPosition);
 
@@ -92,6 +93,7 @@ public class MoveableTile : Tile
         MoveableTile mergedInto = map.GetTileAt(LayeredGridPosition + dir) as MoveableTile;
         //OnMerge 
         mergedInto.PlayMergeAnimation();
+        mergedInto.mergeAudioSrc.Play();
         OnMerged?.Invoke(this, mergedInto);
         //movement ended
         OnTileEndMove?.Invoke(this);
