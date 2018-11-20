@@ -8,9 +8,13 @@ public class PlaceMovementUI : MonoBehaviour
     [SerializeField] SelectionController selectionController;
 
     [SerializeField] Button upButton;
+    [SerializeField] Image upColorDisplay;
     [SerializeField] Button downButton;
+    [SerializeField] Image downColorDisplay;
     [SerializeField] Button leftButton;
+    [SerializeField] Image leftColorDisplay;
     [SerializeField] Button rightButton;
+    [SerializeField] Image rightColorDisplay;
 
     private void Awake()
     {
@@ -32,7 +36,18 @@ public class PlaceMovementUI : MonoBehaviour
         downButton.gameObject.SetActive(CheckIfButtonInBounds(downButton, bounds) && t.CheckIfMoveable(Direction.Down));
         leftButton.gameObject.SetActive(CheckIfButtonInBounds(leftButton, bounds) && t.CheckIfMoveable(Direction.Left));
         rightButton.gameObject.SetActive(CheckIfButtonInBounds(rightButton, bounds) && t.CheckIfMoveable(Direction.Right));
+
+        SetUpButtonColor(t);
     }
+
+    void SetUpButtonColor(MoveableTile t)
+    {
+        upColorDisplay.color = t.GetNextColor(Direction.Up);
+        downColorDisplay.color = t.GetNextColor(Direction.Down);
+        leftColorDisplay.color = t.GetNextColor(Direction.Left);
+        rightColorDisplay.color = t.GetNextColor(Direction.Right);
+    }
+
 
     void SetButtonToDefault()
     {
@@ -40,6 +55,10 @@ public class PlaceMovementUI : MonoBehaviour
         downButton.gameObject.SetActive(true);
         leftButton.gameObject.SetActive(true);
         rightButton.gameObject.SetActive(true);
+        upColorDisplay.color = Color.white;
+        downColorDisplay.color = Color.white;
+        leftColorDisplay.color = Color.white;
+        rightColorDisplay.color = Color.white;
     }
 
     void TileSelected(Tile tile)

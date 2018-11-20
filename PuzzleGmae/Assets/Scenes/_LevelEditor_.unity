@@ -5406,7 +5406,7 @@ MonoBehaviour:
   m_FillRect: {fileID: 1715778960}
   m_HandleRect: {fileID: 614249079}
   m_Direction: 0
-  m_MinValue: 5
+  m_MinValue: 3
   m_MaxValue: 10
   m_WholeNumbers: 1
   m_Value: 5
@@ -11103,9 +11103,9 @@ MonoBehaviour:
   m_FillRect: {fileID: 68055636}
   m_HandleRect: {fileID: 182831754}
   m_Direction: 2
-  m_MinValue: 5
+  m_MinValue: 3
   m_MaxValue: 10
-  m_WholeNumbers: 0
+  m_WholeNumbers: 1
   m_Value: 5
   m_OnValueChanged:
     m_PersistentCalls:
@@ -18146,7 +18146,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1628291750
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24302,17 +24302,17 @@ Prefab:
     - target: {fileID: 224722496240234592, guid: e6e3dc7f5d763c64e9725df68d007722,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224722496240234592, guid: e6e3dc7f5d763c64e9725df68d007722,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224722496240234592, guid: e6e3dc7f5d763c64e9725df68d007722,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -46.5
       objectReference: {fileID: 0}
     - target: {fileID: 224722496240234592, guid: e6e3dc7f5d763c64e9725df68d007722,
         type: 2}
@@ -24387,17 +24387,17 @@ Prefab:
     - target: {fileID: 224718546238418710, guid: e6e3dc7f5d763c64e9725df68d007722,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224718546238418710, guid: e6e3dc7f5d763c64e9725df68d007722,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224718546238418710, guid: e6e3dc7f5d763c64e9725df68d007722,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -55
       objectReference: {fileID: 0}
     - target: {fileID: 224718546238418710, guid: e6e3dc7f5d763c64e9725df68d007722,
         type: 2}

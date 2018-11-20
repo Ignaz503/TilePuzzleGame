@@ -75,10 +75,20 @@ public class MoveableTile : Tile
         //OnTileEndMove?.Invoke(this);
     }
 
+    public Color GetNextColor(Direction dir)
+    {
+        if (!Map.HasTile(LayeredGridPosition + dir))
+        {
+            return map.GetColorForValue(map.GetNewValue(value, dir));
+        }
+        else
+            return Map.GetTileAt(LayeredGridPosition + dir).TileColor;
+    }
+
     void EndMove(Direction dir)
     {
         //else change value
-        Value = map.Level.GetNewValue(value, dir);
+        Value = map.GetNewValue(value, dir);
         //set position and add to tiles
         LayeredGridPosition += dir;
         GridPosition += dir;

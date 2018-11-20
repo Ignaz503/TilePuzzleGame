@@ -92,6 +92,16 @@ public class GameMaster : MonoBehaviour
         OnTileMove?.Invoke(GetCurrentGameState());
     }
 
+    public bool CheckWon()
+    {
+        return currentLevel.CheckIfAchievedWinCondition(GetCurrentGameState());
+    }
+
+    public bool CheckIfLos()
+    {
+        return currentLevel.CheckIfLost(GetCurrentGameState());
+    }
+
     GameState GetCurrentGameState()
     {
         return new GameState(map, movesCounter, mergeCounter);
@@ -121,4 +131,12 @@ public class GameMaster : MonoBehaviour
     {
         return currentLevel.GetValueAndColorGeneratorDescription();
     }
+
+    public void Restart()
+    {
+        map.Restart(currentLevel);
+        movesCounter = 0;
+        mergeCounter = 0;
+    }
+
 }

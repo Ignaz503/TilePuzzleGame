@@ -300,6 +300,12 @@ public class Map : MonoBehaviour
         }
     }
 
+    public void Restart(Level level)
+    {
+        ClearTiles();
+        Initialize(level);
+    }
+
     public void BuildLevelLayout(LevelLayout layout)
     {
         BuildBackground(layout.Width, layout.Height);
@@ -369,5 +375,11 @@ public class Map : MonoBehaviour
         }
     }
 
+    public int GetNewValue(int value, Direction movedDirection)
+    {
+        if (Level != null)
+            return Level.GetNewValue(value, movedDirection);
+        return 0;
+    }
 }
 
