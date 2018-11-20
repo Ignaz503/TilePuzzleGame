@@ -97,7 +97,7 @@ public class GameMaster : MonoBehaviour
         return currentLevel.CheckIfAchievedWinCondition(GetCurrentGameState());
     }
 
-    public bool CheckIfLos()
+    public bool CheckIfLoss()
     {
         return currentLevel.CheckIfLost(GetCurrentGameState());
     }

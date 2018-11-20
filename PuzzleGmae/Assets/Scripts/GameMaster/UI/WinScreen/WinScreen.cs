@@ -16,7 +16,6 @@ public class WinScreen : MonoBehaviour
     {
         if (gameMaster.CheckWon())
         {
-            Debug.Log("Hi");
             gameObject.SetActive(true);
         }
     }
