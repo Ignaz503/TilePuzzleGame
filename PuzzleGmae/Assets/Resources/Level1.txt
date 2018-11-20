@@ -1,5 +1,6 @@
-{"Width":6,"Height":6,"BlockingTiles":[{"GridPosition":{"x":1,"y":4,"magnitude":4.12310553,"sqrMagnitude":17},"Health":50.0},{"GridPosition":{"x":4,"y":4,"magnitude":5.656854,"sqrMagnitude":32},"Health":50.0},{"GridPosition":{"x":1,"y":1,"magnitude":1.41421354,"sqrMagnitude":2},"Health":50.0},{"GridPosition":{"x":4,"y":1,"magnitude":4.12310553,"sqrMagnitude":17},"Health":50.0}],"MoveableTiles":[{"GridPosition":{"x":0,"y":0,"magnitude":0.0,"sqrMagnitude":0},"Value":0},{"GridPosition":{"x":0,"y":5,"magnitude":5.0,"sqrMagnitude":25},"Value":1},{"GridPosition":{"x":5,"y":5,"magnitude":7.071068,"sqrMagnitude":50},"Value":2},{"GridPosition":{"x":5,"y":0,"magnitude":5.0,"sqrMagnitude":25},"Value":1}]}|DefaultValueAndColorGenerator
-ColorPickerValueAsIndex#3#1 0,1333333 1 0,5058824 !1 1 0,1764706 0,4941176 !1 0,0627451 0,4980392 1 !
-0 1!2 1!1 1!3 1!|NumberOfMoveableTilesLeftWinCondition
+{"Width":3,"Height":3,"BlockingTiles":[],"MoveableTiles":[{"GridPosition":{"x":0,"y":0,"magnitude":0.0,"sqrMagnitude":0},"Value":0},{"GridPosition":{"x":1,"y":0,"magnitude":1.0,"sqrMagnitude":1},"Value":1},{"GridPosition":{"x":2,"y":0,"magnitude":2.0,"sqrMagnitude":4},"Value":2},{"GridPosition":{"x":2,"y":1,"magnitude":2.236068,"sqrMagnitude":5},"Value":2},{"GridPosition":{"x":2,"y":2,"magnitude":2.828427,"sqrMagnitude":8},"Value":2},{"GridPosition":{"x":1,"y":2,"magnitude":2.236068,"sqrMagnitude":5},"Value":1},{"GridPosition":{"x":0,"y":2,"magnitude":2.0,"sqrMagnitude":4},"Value":1},{"GridPosition":{"x":1,"y":1,"magnitude":1.41421354,"sqrMagnitude":2},"Value":0}]}|DefaultValueAndColorGenerator
+ColorPickerValueAsIndex#3#1 1 0 0 !1 0 1 0 !1 0 0 1 !
+0 1!2 -1!1 1!3 -1!|NumberOfMoveableTilesLeftWinCondition
 1|NumberOfMovesLoseCondition
-50|SameValueMergeRule|NothingHappensMergeEffect
+25|DifferenceOfNMergeRule
+1|NothingHappensMergeEffect

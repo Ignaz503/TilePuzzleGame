@@ -50,7 +50,7 @@ public class GameMaster : MonoBehaviour
         map.RegisterToOnTileCreated(TileCreated);
         map.Initialize(currentLevel);
 
-        OnStateChange += (state) => Debug.Log("Lost? " + currentLevel.CheckIfLost(state) + "\n Won? " + currentLevel.CheckIfAchievedWinCondition(state));
+        //OnStateChange += (state) => Debug.Log("Lost? " + currentLevel.CheckIfLost(state) + "\n Won? " + currentLevel.CheckIfAchievedWinCondition(state));
     }
 
     void TileCreated(Tile t)
