@@ -90,7 +90,7 @@ public class NumberOfMovesLoseCondition : Condition
 
     public override bool CheckIfConditionAchived(GameState stateOfGame)
     {
-        return stateOfGame.MovesMade >= numberOfMoves;
+        return stateOfGame.MovesMade > numberOfMoves;
     }
 
     public override string GetInstanceDescription()

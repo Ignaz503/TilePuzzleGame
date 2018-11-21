@@ -108,7 +108,7 @@ public class DifferenceOfNMergeRule : BaseMergeRule
 
     public override bool CanMerge(int valPotentialMergedInto, int valMovingTile, Direction potentialMoveDirection)
     {
-        return (valPotentialMergedInto - valMovingTile) == N;
+        return (Mathf.Abs(valPotentialMergedInto - valMovingTile)) == N;
     }
 
     public override string GetInstanceDescription()
