@@ -14,6 +14,7 @@ public class WinScreen : MonoBehaviour
 
     void TryDisplayWinScreen(GameState state)
     {
+
         if (gameMaster.CheckWon())
         {
             gameObject.SetActive(true);

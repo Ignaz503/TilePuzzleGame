@@ -21,6 +21,7 @@ public class BlockerTileInspector : TileInspector {
         blockerTileInspecting = t as BlockingTile;
 
         health.text = blockerTileInspecting.Health.ToString();
+
     }
 
     void EditHealth(string str)
@@ -35,8 +36,6 @@ public class BlockerTileInspector : TileInspector {
             }
         }
     }
-
-   
 
 }
 
